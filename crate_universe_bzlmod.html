@@ -274,7 +274,7 @@ For more details about repin, <a href="https://bazelbuild.github.io/rules_rust/c
 <p>In cases where Rust targets have heavy interactions with other Bazel targets (<a href="https://docs.bazel.build/versions/main/be/c-cpp.html">Cc</a>, <a href="https://rules-proto-grpc.com/en/4.5.0/lang/rust.html">Proto</a>,
 etc.), maintaining Cargo.toml files may have diminishing returns as things like rust-analyzer
 begin to be confused about missing targets or environment variables defined only in Bazel.
-In situations like this, it may be desirable to have a "Cargo free" setup. You find an example in the in the <a href="https://github.com/bazelbuild/rules_rust/examples/bzlmod/hello_world_no_cargo">example folder</a>.</p>
+In situations like this, it may be desirable to have a "Cargo free" setup. You find an example in the in the <a href="https://github.com/bazelbuild/rules_rust/tree/main/examples/hello_world_no_cargo">example folder</a>.</p>
 <p>crates_repository supports this through the packages attribute,
 as shown below.</p>
 <pre><code class="language-python">crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
@@ -338,7 +338,7 @@ Only a cargo workspace needs updating whenever the underlying Cargo.toml file ch
 <p>In some cases, it is require that all external dependencies are vendored, meaning downloaded
 and stored in the workspace. This helps, for example, to conduct licence scans, apply custom patches,
 or to ensure full build reproducibility since no download error could possibly occur.
-You find a complete example in the in the <a href="https://github.com/bazelbuild/rules_rust/examples/bzlmod/all_deps_vendor">example folder</a>.</p>
+You find a complete example in the in the <a href="https://github.com/bazelbuild/rules_rust/tree/main/examples/all_deps_vendor">example folder</a>.</p>
 <p>For the setup, you need to add the skylib in addition to the rust rules to your <code>MODULE.bazel</code>.</p>
 <pre><code class="language-python">module(
     name = "deps_vendored",
@@ -451,7 +451,7 @@ Instead, you create a new file <code>WORKSPACE.bzlmod</code> and add the followi
 sys_deps()
 </code></pre>
 <p>Now, you can build the project as usual.</p>
-<p>There are some more examples of using crate_universe with bzlmod in the <a href="https://github.com/bazelbuild/rules_rust/blob/main/examples/bzlmod/">example folder</a>.</p>
+<p>There are some more examples of using crate_universe with bzlmod in the <a href="https://github.com/bazelbuild/rules_rust/blob/main/examples/">example folder</a>.</p>
 <p><a id="crate"></a></p>
 <h2 id="crate"><a class="header" href="#crate">crate</a></h2>
 <pre>
@@ -483,8 +483,8 @@ crate.render_config(<a href="#crate.render_config-build_file_template">build_fil
                     <a href="#crate.render_config-default_alias_rule_name">default_alias_rule_name</a>, <a href="#crate.render_config-default_package_name">default_package_name</a>, <a href="#crate.render_config-generate_cargo_toml_env_vars">generate_cargo_toml_env_vars</a>,
                     <a href="#crate.render_config-generate_rules_license_metadata">generate_rules_license_metadata</a>, <a href="#crate.render_config-generate_target_compatible_with">generate_target_compatible_with</a>,
                     <a href="#crate.render_config-platforms_template">platforms_template</a>, <a href="#crate.render_config-regen_command">regen_command</a>, <a href="#crate.render_config-repositories">repositories</a>, <a href="#crate.render_config-vendor_mode">vendor_mode</a>)
-crate.spec(<a href="#crate.spec-artifact">artifact</a>, <a href="#crate.spec-branch">branch</a>, <a href="#crate.spec-default_features">default_features</a>, <a href="#crate.spec-features">features</a>, <a href="#crate.spec-git">git</a>, <a href="#crate.spec-lib">lib</a>, <a href="#crate.spec-package">package</a>, <a href="#crate.spec-path">path</a>, <a href="#crate.spec-repositories">repositories</a>, <a href="#crate.spec-rev">rev</a>,
-           <a href="#crate.spec-tag">tag</a>, <a href="#crate.spec-version">version</a>)
+crate.spec(<a href="#crate.spec-artifact">artifact</a>, <a href="#crate.spec-branch">branch</a>, <a href="#crate.spec-default_features">default_features</a>, <a href="#crate.spec-features">features</a>, <a href="#crate.spec-git">git</a>, <a href="#crate.spec-lib">lib</a>, <a href="#crate.spec-package">package</a>, <a href="#crate.spec-package_alias">package_alias</a>, <a href="#crate.spec-path">path</a>,
+           <a href="#crate.spec-repositories">repositories</a>, <a href="#crate.spec-rev">rev</a>, <a href="#crate.spec-tag">tag</a>, <a href="#crate.spec-version">version</a>)
 crate.splicing_config(<a href="#crate.splicing_config-repositories">repositories</a>, <a href="#crate.splicing_config-resolver_version">resolver_version</a>)
 </pre>
 <p>Crate universe module extensions.</p>
@@ -659,6 +659,7 @@ can be found below where the supported keys for each template can be found in th
 <tr><td style="text-align: left"><a id="crate.spec-git"></a>git</td><td style="text-align: left">The Git url to use for the crate. Cannot be used with <code>version</code> or <code>path</code>.</td><td style="text-align: left">String</td><td style="text-align: left">optional</td><td style="text-align: left"><code>""</code></td></tr>
 <tr><td style="text-align: left"><a id="crate.spec-lib"></a>lib</td><td style="text-align: left">If using <code>artifact = 'bin'</code>, additionally setting <code>lib = True</code> declares a dependency on both the package's library and binary, as opposed to just the binary.</td><td style="text-align: left">Boolean</td><td style="text-align: left">optional</td><td style="text-align: left"><code>False</code></td></tr>
 <tr><td style="text-align: left"><a id="crate.spec-package"></a>package</td><td style="text-align: left">The explicit name of the package.</td><td style="text-align: left">String</td><td style="text-align: left">required</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><a id="crate.spec-package_alias"></a>package_alias</td><td style="text-align: left">Alias for the package.</td><td style="text-align: left">String</td><td style="text-align: left">optional</td><td style="text-align: left"><code>""</code></td></tr>
 <tr><td style="text-align: left"><a id="crate.spec-path"></a>path</td><td style="text-align: left">The local path of the remote crate. Cannot be used with <code>version</code> or <code>git</code>.</td><td style="text-align: left">String</td><td style="text-align: left">optional</td><td style="text-align: left"><code>""</code></td></tr>
 <tr><td style="text-align: left"><a id="crate.spec-repositories"></a>repositories</td><td style="text-align: left">A list of repository names specified from <code>crate.from_cargo(name=...)</code> that this spec is applied to. Defaults to all repositories.</td><td style="text-align: left">List of strings</td><td style="text-align: left">optional</td><td style="text-align: left"><code>[]</code></td></tr>
 <tr><td style="text-align: left"><a id="crate.spec-rev"></a>rev</td><td style="text-align: left">The git revision of the remote crate. Tied with the <code>git</code> param. Only one of branch, tag or rev may be specified.</td><td style="text-align: left">String</td><td style="text-align: left">optional</td><td style="text-align: left"><code>""</code></td></tr>
